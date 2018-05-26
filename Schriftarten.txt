@@ -1,0 +1,7 @@
+A0 = 5*6  Pixel (Kurz)
+A1 = 5*11 Pixel (Kurz & Weit)
+A2 = 7*6  Pixel (Standart)
+A3 = 7*11 Pixel (Weit)
+A4 = 7*9  Pixel
+A5 = 7*17 Pixel (Extra Weit)
+A6 = Variable Breite, sehr kleine Schrift

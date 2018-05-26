@@ -1,2 +1,1 @@
-# Sigma-AS227-Serial-Data-Protocol-Documentation-German
-Das Datenprotokoll der Laufschrift "Sigma AS227" reverse-engineered und dokumentiert
+Da ich in meiner Freizeit mit der oben genannten Laufschrift (Sigma AS227) gearbeitet habe, die Software aber schon lange veraltet und nicht mehr unterstützt wird und es sonst keine wirklich brauchbare Dokumentation über dieser Laufschrift gibt, habe ich mich dran gesetzt, das Datenprotokoll für die serielle Verbindung der Laufschrift zu verstehen und anzuwenden/reverse engineeren. Diese Repository beinhaltet einige Textdokumente und Bilder, die den Aufbau und die Funktionen des gesamten Protokolls dokumentieren, um damit eigene Programme und Scripte für das Display anzusteuern.

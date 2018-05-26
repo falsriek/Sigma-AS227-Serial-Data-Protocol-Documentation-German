@@ -1,0 +1,66 @@
+Dokumenation AS227 LED Display:
+
+Serielle Anschlussdaten:
+*	Baud: 		2400
+*	Parität: 	Keine
+*	Datenbits:	8
+*	Stoppbits:	1
+
+Protokollaufbau:
+*	H"00 FF FF 00 0B 01 FF 01 30 31" +  Befehlssatz + H"FF FF 00"
+*	 └[ Header, benötigt ]                            └[ Stopzeichenfolge, benötigt ]
+ 
+Befehlssatz:
+*	Der Inhalt, der innerhalb des Headers und der Stopzeichenfolge zum Display gesendet wird.
+*
+*	Regulärer ASCII-Text wird ohne weiteres in den Satz eingefügt:
+*		H"41" (ASCII A) ergibt A auf dem Display
+*
+*	Befehle (z.B. "Sonderzeichen einfügen" oder "Schriftart ändern") werden weiter unten besprochen.
+*	Sie können, genau so wie Text, beliebig in den Satz eingeschoben werden, müssen jedoch
+*	eventuell, je nach Befehl (siehe unten) mit H"EF" begonnen werden.
+
+Inline-Befehle:
+*	Fast alle Befehle bestehen aus H"EF ??"
+*  	                                 │  └[ Befehlsnummer in HEX ]
+*                                    └[ Befehlsbeginn ]
+*
+*	Nur die Moving-Method, Sonderzeichen und eine neue Seite benötigen keinen Befehlsbeginn vor
+*	der Befehlsnummer.
+*
+*   Mit H"FF" kann man mehrere Seiten mit einem Befehlssatz erstellen, Beispiel:
+*   	"ABC" + H"FF" + "DEF"
+*	Ergibt auf dem Display:
+*		ABC
+*		[Pause von knapp 3 Sekunden, Display wird geleert]
+*		DEF
+*		[Pause von knapp 3 Sekunden, Display wird geleert]
+*		[Wiederholt am Anfang des gesammten Befehlssatzes]
+*
+
+ Befehlstabelle:
+*	┌────┬───────┬──────────────────────────────┬────────────────────────────────────┐
+*	│ EF │  HEX  │ Beschreibung                 │ Anmerkung                          │
+*	├────┼───────┼──────────────────────────────┼────────────────────────────────────┤
+*	│ -- │    FF │ Neue Seite beginnen          │                                    │
+*	│ -- │ 01-19 │ Einblendungsanimation        │ Siehe "Moving Methods.txt"         │
+*	│ -- │ 80-ED │ Sonderzeichen einfügen       │ Siehe "Sonderzeichen.png"          │
+*	│ EF │    80 │ Uhrzeit einfügen             │                                    │ 
+*	│ EF │    81 │ Datum einfügen               │                                    │
+*	│ EF │ A0-A6 │ Schriftart ändern            │ Siehe "Schriftarten.txt"           │
+*	│ EF │ 60-7D │ Symbol einfügen              │ Siehe "Symbole.png"                │
+*	│ EF │ D8-DF │ Bitmap einfügen              │ Siehe "Bitmaps.png"                │
+*	│ EF │ 90-97 │ Szenen (Fertige Animationen) │ Siehe "Szenen.txt"                 │
+*	│ EF │ E0-E2 │ Signalton auslösen           │ 1x, 2x oder 3x piepen              │
+*	│ EF │ C0-C7 │ Geschwindigkeit einstellen   │ 1 Schnell - 3 Standart - 8 Langsam │
+*	│ EF │ C8-CF │ Pause einfügen               │ 1 Sekunde - 8 Sekunden             │
+*	└────┴───────┴──────────────────────────────┴────────────────────────────────────┘
+
+Beispiel:
+*                                     ┌─[Einblendungsanimation 02]        [Sonderzeichen Ohm]─┐         ┌─[Einblendungsanimation 02]
+*									  │     [Neue Seite]─┐             [Neue Seite]─┐         │         │    ┌─["IJKL"]            ┌─[Stopzeichenfolge]
+*									  │                  │                          │         │         │    │                     │
+*	H"00 FF FF 00 0B 01 FF 01 30 31   02   41 42 43 44   FF   EF A6   45 46 47 48   FF   04   EA   FF   02   49 4A 4B 4C   EF CA   FF FF 00"
+*	  │                                    │                  │       │                  │         │                       │
+*	  └─[Header]                           └─["ABCD"]         │       └─["EFGH"]         │         └─[Neue Seite]          └─[3 Sekunden Pause]
+*                                                             └─[Schriftart A6]          └─[Einblendungsanimation 04]

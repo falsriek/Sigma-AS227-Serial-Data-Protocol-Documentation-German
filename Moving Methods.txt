@@ -1,0 +1,25 @@
+Cyclic
+Immediate
+Open from Right
+Open from Left
+Open from Center
+Open to Center
+Cover from Center
+Cover from Right
+Cover from Left
+Cover to Center
+Scroll Up
+Scroll Down
+Interlace to Center
+Interlace Cover
+Cover Up
+Cover Down
+Scan Line
+Explode
+Pac Man
+Fall & Stack
+Shoot
+Flash
+Random
+Slide in
+Auto

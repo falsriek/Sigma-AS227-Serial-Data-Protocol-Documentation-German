@@ -1,0 +1,8 @@
+90 = Merry X'Mas
+91 = Happy New Year
+92 = 4th July
+93 = Happy Easter
+94 = Happy Halloween
+95 = Don't Drink & Drive
+96 = No Smoking
+97 = Welcome
